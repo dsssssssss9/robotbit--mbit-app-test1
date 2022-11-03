@@ -1,26 +1,3 @@
-/**
- * Simple test of using MBIT APP to control RobotBit...
- * 
- * Uses Motors connected to M1A  + M2A
- * 
- * Displays Direction Press in APP on MicroBit
- * 
- * F = Forward
- * 
- * B = Backwards
- * 
- * L = Turn Left
- * 
- * R - Turn Right
- * 
- * < = Spin Left
- * 
- * > = Spin Right
- * 
- * Use Piano Keys to control speed - press desired speed BEFORE pressing direction!
- * 
- * J
- */
 function carctrl () {
     if (uartdata == "A") {
         basic.showString("F")
@@ -75,6 +52,29 @@ function carctrl () {
         robotbit.MotorStopAll()
     }
 }
+/**
+ * Simple test of using MBIT APP to control RobotBit...
+ * 
+ * Uses Motors connected to M1A  + M2A
+ * 
+ * Displays Direction Press in APP on MicroBit
+ * 
+ * F = Forward
+ * 
+ * B = Backwards
+ * 
+ * L = Turn Left
+ * 
+ * R - Turn Right
+ * 
+ * < = Spin Left
+ * 
+ * > = Spin Right
+ * 
+ * Use Piano Keys to control speed - press desired speed BEFORE pressing direction!
+ * 
+ * J
+ */
 function sendDistanceAndSpeed () {
     if (connected) {
         bluetooth.uartWriteString("$CSB" + "" + "," + speed + "#")
