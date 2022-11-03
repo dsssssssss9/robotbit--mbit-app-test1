@@ -1,21 +1,75 @@
-bluetooth.onBluetoothConnected(function () {
-    basic.showIcon(IconNames.Happy)
-    SendDsitanceAndSpeed()
-    basic.pause(500)
-    connected = true
-    while (connected) {
-        uartdata = bluetooth.uartReadUntil(serial.delimiters(Delimiters.Hash))
-        CarCtrl()
-        DoSpeed()
+function carctrl () {
+    if (uartdata == "A") {
+        basic.showString("F")
+        robotbit.MotorRunDual(
+        robotbit.Motors.M1A,
+        speed,
+        robotbit.Motors.M2A,
+        speed
+        )
+    } else if (uartdata == "B") {
+        basic.showString("B")
+        robotbit.MotorRunDual(
+        robotbit.Motors.M1A,
+        speed * -1,
+        robotbit.Motors.M2A,
+        speed * -1
+        )
+    } else if (uartdata == "C") {
+        basic.showString("L")
+        robotbit.MotorRunDual(
+        robotbit.Motors.M1A,
+        0,
+        robotbit.Motors.M2A,
+        speed
+        )
+    } else if (uartdata == "D") {
+        basic.showString("R")
+        robotbit.MotorRunDual(
+        robotbit.Motors.M1A,
+        speed,
+        robotbit.Motors.M2A,
+        0
+        )
+    } else if (uartdata == "E") {
+        basic.showString("<")
+        robotbit.MotorRunDual(
+        robotbit.Motors.M1A,
+        speed * -1,
+        robotbit.Motors.M2A,
+        speed
+        )
+    } else if (uartdata == "F") {
+        basic.showString("<")
+        robotbit.MotorRunDual(
+        robotbit.Motors.M1A,
+        speed,
+        robotbit.Motors.M2A,
+        speed * -1
+        )
+    } else if (uartdata == "0") {
+        basic.showIcon(IconNames.No)
+        robotbit.MotorStopAll()
     }
-})
+}
+function sendDistanceAndSpeed () {
+	
+}
 bluetooth.onBluetoothDisconnected(function () {
     basic.showIcon(IconNames.Sad)
     connected = false
 })
-function SendDsitanceAndSpeed () {
-	
-}
+bluetooth.onBluetoothConnected(function () {
+    basic.showIcon(IconNames.Happy)
+    sendDistanceAndSpeed()
+    basic.pause(500)
+    connected = true
+    while (connected) {
+        uartdata = bluetooth.uartReadUntil(serial.delimiters(Delimiters.Hash))
+        carctrl()
+        DoSpeed()
+    }
+})
 function DoSpeed () {
     if (uartdata == "1") {
         speed = 20
@@ -43,9 +97,6 @@ function DoSpeed () {
         speed = 255
     }
 }
-function CarCtrl () {
-	
-}
 let uartdata = ""
 let speed = 0
 let connected = false
@@ -54,3 +105,7 @@ bluetooth.startUartService()
 basic.showIcon(IconNames.StickFigure)
 connected = false
 speed = 100
+basic.forever(function () {
+    basic.pause(200)
+    sendDistanceAndSpeed()
+})
