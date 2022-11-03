@@ -17,7 +17,7 @@
  * 
  * > = Spin Right
  * 
- * Use Piano Keys to control speed 
+ * Use Piano Keys to control speed - press desired speed BEFORE pressing direction!
  * 
  * J
  */
